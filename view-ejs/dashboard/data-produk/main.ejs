@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head><script src="/docs/5.3/assets/js/color-modes.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+        <meta name="generator" content="Hugo 0.122.0">
+        <title>Product List</title>
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="/custom-dashboard.css">
+        <link rel="stylesheet" href="/fontawesome/css/all.css">
+        <link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+        <script src="/bootstrap/js/bootstrap.js"></script>
+        <script src="/fontawesome/js/all.js"></script>
+        <script src="/js/toolbar.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+        <!-- Datatable -->
+        <link href="https://cdn.datatables.net/v/dt/dt-2.0.8/datatables.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css" rel="stylesheet">
+        <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/dataTables.buttons.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.dataTables.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.2/js/buttons.print.min.js"></script>
+    </head>
+    <body>
+        <div class="container py-3">
+            <header>
+                <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+                    <a href="/" class="d-flex align-items-center link-body-emphasis text-decoration-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94" role="img"><title>Bootstrap</title><path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z" fill="currentColor"></path></svg>
+                        <span class="fs-4">Products List</span>
+                    </a>
+                    <div class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                        <h5 class="me-3 py-2 link-body-emphasis text-decoration-none">Welcome Donny</h5>
+                    </div>
+                </div>
+            </header> 
+
+            <div class="toolbar">
+                <div class="toolbar-menu">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="main-toolbar">
+                                <div class="row g-3">
+                                    <div class="col-auto">
+                                        <button class="btn btn-sm btn-light btn-light-bordered" id="add-data" title="Tambah Data" onclick="openFormAddData()" style="background-color: #D6DBDF;"><i class="fa fa-plus"></i> Tambah Data Baru</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <form action="/data-produk/proses-simpan" method="post" style="margin-bottom: 30px;">
+                <div id="form-add-data">
+                    <div style="margin-top: 30px;">
+                        <h6>Tambah Data</h6>
+                        <div style="color: #000000; margin-top: 20px;" class="row">
+                            <div class="col-auto">
+                                <input type="text" class="form-control form-control-sm" size="9" name="nama_barang" placeholder="Nama Produk" id="product_name" required>
+                            </div>
+                            <div class="col-auto">
+                                <select name="kategori" id="product_category" class="form-select form-select-sm" required>
+                                <option value="">--Pilih--</option>
+                                <option>Botol</option>
+                                <option>Gelas</option>
+                                <option>Galon</option>
+                                </select>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group" id="search-input-group">
+                                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                                    <input type="text" class="form-control form-control-sm" size="10" id="rupiah" name="harga_pokok" placeholder="Harga Pokok" required>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <div class="input-group" id="search-input-group">
+                                    <span class="input-group-text"><i class="far fa-money-bill-alt"></i></span>
+                                    <input type="text" class="form-control form-control-sm" size="10" id="rupiah" name="harga_jual" placeholder="Harga Jual" required>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <input type="text" class="form-control form-control-sm" size="10" name="kode" placeholder="Kode Barang" id="product_initial-stock" required>
+                            </div>
+                    
+                            <div class="col-auto">
+                                <a href="/data-produk/tambah"><button class="btn btn-sm btn-dark"><i class="fa-solid fa-save me-1"></i> save</button></a>
+                            </div>
+                            <div class="col-auto">
+                                <button class="btn btn-sm btn-dark" id="close-form-add-data" onclick="closeFormAddData()"><i class="fa fa-times"></i> close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <% if (req.query.note == 'sukses') { %>
+            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                <strong><i class="fa-solid fa-check-circle me-1"></i><%= req.query.pesan %></strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+            <% if (req.query.note == 'gagal') { %>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong><i class="fa-solid fa-exclamation-triangle me-1"></i>Gagal, cek terminal</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <% } %>
+
+            <table class="table table-striped" id="table_produk"  style="width:100%;">
+                <thead class="table-light" id="col-head">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Barang</th>
+                        <th>Katagori</th>
+                        <th>Harga Pokok</th>
+                        <th>Harga Jual</th>
+                        <th>Kode</th>
+                        <th>Opsi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for( const i in semua_produk ) { %>
+                        <% let urut = Number(i) + Number(1) %>
+                        <tr>
+                        <td><%= urut %></td>
+                        <td><%= semua_produk[i].nama_barang %></td>
+                        <td><%= semua_produk[i].kategori %></td>
+                        <td><%= semua_produk[i].harga_pokok %></td>
+                        <td><%= semua_produk[i].harga_jual %></td>
+                        <td><%= semua_produk[i].kode %></td>
+                        <td>
+                            <a href="/data-produk/edit/<%= semua_produk[i].id %>" class="btn btn-sm btn-dark" title="Edit" style="font-size: 10px;"><i class="fa-solid fa-fw fa-edit"></i>
+                            <!-- <a href=""><button class="btn btn-xm btn-danger"  type="submit"><i class="fa fa-trash"></i></button></a> -->
+                        </td>
+                        </tr>
+                    <% } %>  
+                </tbody>
+            </table>
+            <script>
+                $('#table_produk').DataTable({
+                    layout: {
+                        topStart: {
+                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                        }
+                    }
+                });
+            </script>
+
+            <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+                <div class="col-md-4 d-flex align-items-center">
+                    <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
+                        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+                    </a>
+                    <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2024 Company, Inc</span>
+                </div>
+                <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
+                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
+                    <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
+                </ul>
+            </footer>
+        </div>
+    </body>
+</html>
+    
+

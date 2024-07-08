@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+  <%- include('../layout/header.ejs') %>
+
+  <body>
+    <main class="form-signin w-100 m-auto">
+      <form action="/register/proses-simpan" method="post" style="margin-top: 45%;">
+        <h1 class="h3 mb-3 fw-normal" style="text-align: center;">Register</h1>
+        <% if (req.query.note == 'sukses') { %>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong><i class="fa-solid fa-check-circle me-1"></i><%= req.query.pesan %></strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% } %>
+        <% if (req.query.note == 'gagal') { %>
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong><i class="fa-solid fa-exclamation-triangle me-1"></i>Gagal, cek terminal</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        <% } %>
+        <div class="form-floating">
+          <input type="text" name="nama_lengkap" class="form-control" id="floatingInput" placeholder="Name" required>
+          <label for="floatingInput">Name</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" name="form_username" class="form-control" id="floatingInput" placeholder="Username" required>
+          <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" name="form_password" class="form-control" id="floatingPassword" placeholder="Password" required>
+          <label for="floatingPassword">Password</label>
+        </div>
+        <div class="form-check text-start my-3">
+          <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+          agree to the terms & conditions
+          </label>
+        </div>
+        <button class="btn btn-primary w-100 py-2 mt-1" type="submit">Register</button>
+        <label class="form-check-label mt-2 ms-3" for="flexCheckDefault">Already have an acount ?<a href="/login" style="margin-left: 15px;">Sign in</a></label>
+        <p class="mt-5 mb-3 text-body-secondary" style="text-align: center;">&copy; 2024–2025</p>
+      </form>
+    </main>
+  </body>
+</html>
+
+    
